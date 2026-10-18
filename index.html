@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Ömer & Azra</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Inter Font as San Francisco alternative -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'sans-serif'],
+          },
+          colors: {
+            apple: {
+              gray: '#1c1c1e',
+              card: 'rgba(255, 255, 255, 0.05)',
+              border: 'rgba(255, 255, 255, 0.12)',
+              accent: '#0071e3',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth Apple-style transitions */
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: #000000;
+      color: #f5f5f7;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow Animations */
+    .glow-orb-1 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 113, 227, 0.25) 0%, rgba(120, 119, 198, 0.15) 50%, rgba(0,0,0,0) 70%);
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(80px);
+      pointer-events: none;
+      animation: pulseGlow 10s ease-in-out infinite alternate;
+    }
+
+    .glow-orb-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(0,0,0,0) 70%);
+      bottom: 10%;
+      right: 20%;
+      filter: blur(90px);
+      pointer-events: none;
+      animation: pulseGlow 12s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+      100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.15); }
+    }
+
+    /* Glassmorphism Surface */
+    .apple-glass {
+      background: rgba(22, 22, 24, 0.65);
+      backdrop-filter: blur(40px) saturate(190%);
+      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.56), 0 18px 36px -18px rgba(0, 0, 0, 0.73);
+    }
+
+    /* Apple Gradient Text */
+    .apple-text-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #a1a1a6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .apple-text-highlight {
+      background: linear-gradient(135deg, #f5f5f7 0%, #0071e3 50%, #9855ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Apple Dynamic Pill Button */
+    .apple-pill-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.92);
+      color: #000000;
+      font-weight: 500;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 10px 30px -5px rgba(255, 255, 255, 0.3);
+    }
+
+    .apple-pill-btn:hover {
+      background: #ffffff;
+      transform: scale(1.03);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 15px 40px -5px rgba(255, 255, 255, 0.5);
+    }
+
+    .apple-pill-btn:active {
+      transform: scale(0.97);
+      transition: transform 0.1s ease;
+    }
+
+    /* Ultra-smooth fade/scale transition classes */
+    .transition-out {
+      opacity: 0;
+      transform: scale(0.92) translateY(-10px);
+      filter: blur(10px);
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .transition-in-prep {
+      opacity: 0;
+      transform: scale(0.94) translateY(20px);
+      filter: blur(12px);
+    }
+
+    .transition-in-active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      filter: blur(0px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Image frame refinement */
+    .apple-image-container {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-image-container:hover {
+      transform: scale(1.01);
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen relative p-4 selection:bg-blue-500 selection:text-white">
+
+  <!-- Subtle Animated Glow Backgrounds -->
+  <div class="glow-orb-1"></div>
+  <div class="glow-orb-2"></div>
+
+  <!-- Main Container -->
+  <main class="w-full max-w-xl mx-auto z-10 relative">
+
+    <!-- INITIAL STATE: Centered Glass Card with Button -->
+    <div id="initial-card" class="apple-glass rounded-3xl p-8 sm:p-12 text-center transition-all duration-700 ease-out flex flex-col items-center justify-center min-h-[320px]">
+      
+      <div class="mb-8 space-y-2">
+        <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase opacity-90">Sessiz Mod</span>
+        <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight apple-text-gradient">
+          Gece Mesajı
+        </h1>
+      </div>
+
+      <!-- Clean Apple Pill Button -->
+      <button 
+        id="trigger-btn"
+        onclick="revealContent()"
+        class="apple-pill-btn px-8 py-3.5 rounded-full text-base sm:text-lg font-medium tracking-tight flex items-center gap-2 cursor-pointer group">
+        <span>butona bas</span>
+        <svg class="w-4 h-4 text-black transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- REVEALED STATE: Apple-style Card with resim.png & Gradient Text -->
+    <div id="revealed-card" class="hidden apple-glass rounded-3xl p-6 sm:p-8 text-center flex-col items-center transition-in-prep">
+      
+      <!-- Top Tag -->
+      <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-neutral-400 font-medium mb-5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Acil Uyarı</span>
+      </div>
+
+      <!-- Image Container (using resim.png) -->
+      <div class="apple-image-container w-full max-w-md mb-6 bg-black/40">
+        <img 
+          src="resim.png" 
+          alt="Ömer ve Azra" 
+          onerror="this.onerror=null; this.src='612489618083823514.jpg';"
+          class="w-full h-auto object-cover max-h-[55vh] rounded-2xl block"
+        />
+      </div>
+
+      <!-- Main Gradient Message Text -->
+      <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight apple-text-highlight leading-tight sm:leading-snug mb-6 px-2">
+        Ananızı fondiplerim Ömer ve Azra uyuyun
+      </h2>
+
+      <!-- Reset Option -->
+      <button 
+        onclick="resetView()"
+        class="text-xs text-neutral-400 hover:text-white transition-colors duration-200 px-4 py-2 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10">
+        Tekrar Göster
+      </button>
+
+    </div>
+
+  </main>
+
+  <footer class="absolute bottom-6 text-center text-xs text-neutral-600 font-normal tracking-wide">
+    Designed with Apple Minimalism
+  </footer>
+
+  <script>
+    let audioCtx = null;
+
+    // Web Audio API feedback (Apple-like soft haptic synth tap)
+    function playAppleSound() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const now = audioCtx.currentTime;
+
+        // Soft sub-bass tick
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.12);
+
+        // Soft high sparkle
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(880, now + 0.05);
+        osc2.frequency.exponentialRampToValueAtTime(1760, now + 0.2);
+
+        gain2.gain.setValueAtTime(0.08, now + 0.05);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+
+        osc2.start(now + 0.05);
+        osc2.stop(now + 0.2);
+
+      } catch (e) {
+        console.log('Audio init skipped', e);
+      }
+    }
+
+    function revealContent() {
+      playAppleSound();
+
+      const initialCard = document.getElementById('initial-card');
+      const revealedCard = document.getElementById('revealed-card');
+
+      // Animate Out Initial Card
+      initialCard.classList.add('transition-out');
+
+      setTimeout(() => {
+        initialCard.classList.add('hidden');
+        
+        // Show Revealed Card with ultra-smooth spring effect
+        revealedCard.classList.remove('hidden');
+        revealedCard.classList.add('flex');
+
+        // Force reflow
+        void revealedCard.offsetWidth;
+
+        revealedCard.classList.remove('transition-in-prep');
+        revealedCard.classList.add('transition-in-active');
+
+        // Elegant minimal particle shower
+        confetti({
+          particleCount: 35,
+          spread: 60,
+          origin: { y: 0.7 },
+          colors: ['#ffffff', '#0071e3', '#9855ff', '#a1a1a6'],
+          ticks: 200,
+          gravity: 0.8,
+          scalar: 0.9
+        });
+      }, 400);
+    }
+
+    function resetView() {
+      const initialCard = document.getElementById('initial-card');
+      const revealedCard = document.getElementById('revealed-card');
+
+      revealedCard.classList.remove('transition-in-active');
+      revealedCard.classList.add('transition-in-prep');
+
+      setTimeout(() => {
+        revealedCard.classList.add('hidden');
+        revealedCard.classList.remove('flex');
+
+        initialCard.classList.remove('hidden', 'transition-out');
+      }, 300);
+    }
+  </script>
+</body>
+</html>
